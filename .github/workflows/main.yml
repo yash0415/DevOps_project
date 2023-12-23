@@ -39,4 +39,11 @@ jobs:
           docker login -u yash1508 -p Yash@0408
           docker pull yash1508/devops
           sleep 25s
-          docker run --name pr_final1 -d -p 8888:80 yash1508/devops
+          docker service create --replicas 4 --name pr_final1 -d -p 8888:80 yash1508/devops
+      - name: Your Other Steps
+        run: |
+          # Your other deployment steps here
+          ssh ubuntu@52.15.228.238 << 'EOF'
+          sudo apt update
+          ip a
+          sudo apt install -y docker.io git php php-mysql
