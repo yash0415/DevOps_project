@@ -1,0 +1,42 @@
+name: Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test
+        uses: actions/checkout@v2
+
+      - name: Configure SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.MASTER }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 52.15.228.238 >> ~/.ssh/known_hosts
+
+      - name: Add StrictHostKeyChecking to SSH Config
+        run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Your Other Steps
+        run: |
+          # Your other deployment steps here
+          ssh ubuntu@52.15.228.238 << 'EOF'
+          sudo apt update
+          ip a
+          sudo apt install -y docker.io git php php-mysql
+          bash jenkins
+          sudo chmod 777 /var/run/docker.sock
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images)
+
+          docker login -u yash1508 -p Yash@0408
+          docker pull yash1508/devops
+          sleep 25s
+          docker run --name pr_final1 -d -p 8888:80 yash1508/devops
