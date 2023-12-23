@@ -27,7 +27,7 @@ jobs:
         run: |
           # Your other deployment steps here
           ssh ubuntu@3.101.146.184 << 'EOF'
-          sudo apt update
+          #sudo apt update
           ip a
           sudo apt purge apache2 -y
           sudo apt install -y docker.io git php php-mysql
