@@ -39,4 +39,4 @@ jobs:
           docker login -u yash1508 -p Yash@0408
           docker pull yash1508/project
           sleep 25s
-          docker run --name pr_final -d -p 80:80 yash1508/project
+          docker run --name pr_final -d -p 8888:80 yash1508/project
