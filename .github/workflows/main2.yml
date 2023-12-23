@@ -37,6 +37,6 @@ jobs:
           docker rmi $(docker images)
 
           docker login -u yash1508 -p Yash@0408
-          docker pull yash1508/project
+          docker pull yash1508/devops
           sleep 25s
-          docker run --name pr_final -d -p 8888:80 yash1508/project
+          docker run --name pr_final -d -p 8888:80 yash1508/devops
