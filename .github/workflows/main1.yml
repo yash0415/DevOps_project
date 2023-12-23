@@ -39,4 +39,4 @@ jobs:
           docker login -u yash1508 -p Yash@0408
           docker pull yash1508/devops
           sleep 25s
-          docker service create --replicas 5 --name pr_final1 -d -p 80:80 yash1508/devops
+          docker run --name pr_final1 -d -p 80:80 yash1508/devops
